@@ -1,0 +1,6 @@
+{
+  "name": "Amanita Amur",
+  "description": "Отборный сушеный красный и пантерный мухомор таёжного сбора. Правильная сушка 40°C, очистка от песка. Быстрая доставка из Хабаровска по всей России.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
