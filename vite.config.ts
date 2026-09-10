@@ -20,7 +20,6 @@ export default defineConfig(() => {
                 try {
                   const data = JSON.parse(body);
                   const imageBase64 = data.imageBase64 || '';
-                  const productKey = data.productKey || 'muscaria';
                   const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, '');
                   const buffer = Buffer.from(base64Data, 'base64');
                   
@@ -28,13 +27,32 @@ export default defineConfig(() => {
                   if (!fs.existsSync(pubDir)) fs.mkdirSync(pubDir, { recursive: true });
                   const heroDir = path.resolve(pubDir, 'assets/hero');
                   if (!fs.existsSync(heroDir)) fs.mkdirSync(heroDir, { recursive: true });
+                  const distDir = path.resolve(__dirname, 'dist');
 
-                  if (productKey === 'muscaria') {
+                  const productKey = data.productKey || 'muscaria';
+
+                  if (productKey === 'pantherina') {
+                    fs.writeFileSync(path.resolve(pubDir, 'photo_pantherina.jpg'), buffer);
+                    fs.writeFileSync(path.resolve(pubDir, '806f94852d997c385ce5016e6e1575d8.jpg'), buffer);
+                    fs.writeFileSync(path.resolve(pubDir, 'pantherina-batch.jpg'), buffer);
+                    if (fs.existsSync(distDir)) {
+                      fs.writeFileSync(path.resolve(distDir, 'photo_pantherina.jpg'), buffer);
+                      fs.writeFileSync(path.resolve(distDir, '806f94852d997c385ce5016e6e1575d8.jpg'), buffer);
+                      fs.writeFileSync(path.resolve(distDir, 'pantherina-batch.jpg'), buffer);
+                    }
+                  } else {
                     fs.writeFileSync(path.resolve(pubDir, 'photo_2026-09-10_04-08-38.jpg'), buffer);
                     fs.writeFileSync(path.resolve(pubDir, 'amanita-amur-package.jpg'), buffer);
                     fs.writeFileSync(path.resolve(heroDir, 'amanita-amur-package.jpg'), buffer);
-                  } else {
-                    fs.writeFileSync(path.resolve(pubDir, 'pantherina-batch.jpg'), buffer);
+
+                    if (fs.existsSync(distDir)) {
+                      fs.writeFileSync(path.resolve(distDir, 'photo_2026-09-10_04-08-38.jpg'), buffer);
+                      fs.writeFileSync(path.resolve(distDir, 'amanita-amur-package.jpg'), buffer);
+                      const distHero = path.resolve(distDir, 'assets/hero');
+                      if (fs.existsSync(distHero)) {
+                        fs.writeFileSync(path.resolve(distHero, 'amanita-amur-package.jpg'), buffer);
+                      }
+                    }
                   }
 
                   res.setHeader('Content-Type', 'application/json');

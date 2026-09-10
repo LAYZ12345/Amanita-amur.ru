@@ -433,20 +433,18 @@
               </p>
             </div>
 
-            <!-- Dedicated Photo Showcase with Fullscreen Zoom & Custom Upload -->
+            <!-- Dedicated Photo Showcase with Fullscreen Zoom -->
             <div class="mb-6">
-              <div id="dropzone-muscaria" 
-                   class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-linenDark border border-borderStone group shadow-inner transition-all"
-                   ondragover="handlePhotoDragOver(event, 'muscaria')"
-                   ondragleave="handlePhotoDragLeave(event, 'muscaria')"
-                   ondrop="handlePhotoDrop(event, 'muscaria')">
+              <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-linenDark border border-borderStone group shadow-inner transition-all"
+                   ondragover="event.preventDefault(); this.classList.add('ring-2', 'ring-terracotta');"
+                   ondragleave="this.classList.remove('ring-2', 'ring-terracotta');"
+                   ondrop="handleMuscariaDrop(event)">
                 <img id="img-product-muscaria"
-                     src="/assets/hero/amanita-amur-package.jpg" 
+                     src="/photo_2026-09-10_04-08-38.jpg" 
                      alt="Красный мухомор (Amanita Muscaria) — сбор 2026, бассейн Амура"
                      referrerpolicy="no-referrer"
-                     class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 cursor-pointer"
-                     onclick="openImageModal('muscaria')"
-                     onerror="this.onerror=null; this.src='/photo_2026-09-10_04-08-38.jpg'" />
+                     class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 cursor-pointer"
+                     onclick="openImageModal('muscaria')" />
                 
                 <!-- Badges over photo -->
                 <div class="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5 pointer-events-none">
@@ -458,16 +456,17 @@
                   </span>
                 </div>
 
-                <!-- Drag & drop overlay indicator -->
-                <div id="drop-overlay-muscaria" class="absolute inset-0 bg-graphite/75 backdrop-blur-xs flex flex-col items-center justify-center text-white text-xs font-semibold pointer-events-none opacity-0 transition-opacity">
-                  <svg class="w-8 h-8 text-white mb-1.5 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-                  </svg>
-                  <span>Отпустите файл, чтобы установить фото</span>
-                </div>
-
                 <!-- Action buttons over photo -->
                 <div class="absolute bottom-2.5 right-2.5 flex items-center gap-1.5 opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                  <input type="file" id="muscaria-photo-input" accept="image/*" class="hidden" onchange="handleMuscariaPhotoUpload(this)" />
+                  <button type="button" onclick="document.getElementById('muscaria-photo-input').click()" 
+                          class="px-2.5 py-1.5 rounded-lg bg-white/95 hover:bg-white text-graphite text-[11px] font-semibold shadow-md flex items-center gap-1 border border-borderStone/40 transition-all"
+                          title="Загрузить или заменить фото реальной партии">
+                    <svg class="w-3.5 h-3.5 text-conifer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                    </svg>
+                    <span>Загрузить фото</span>
+                  </button>
                   <button type="button" onclick="openImageModal('muscaria')" 
                           class="px-2.5 py-1.5 rounded-lg bg-white/95 hover:bg-white text-graphite text-[11px] font-semibold shadow-md flex items-center gap-1 border border-borderStone/40 transition-all"
                           title="Открыть в полном размере">
@@ -476,26 +475,11 @@
                     </svg>
                     <span>Увеличить</span>
                   </button>
-
-                  <label class="px-2.5 py-1.5 rounded-lg bg-terracotta hover:bg-[#962e1e] text-white text-[11px] font-semibold shadow-md flex items-center gap-1 transition-all cursor-pointer"
-                         title="Загрузить фото партии со своего устройства">
-                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    <span>Заменить фото</span>
-                    <input type="file" accept="image/*" class="hidden" onchange="handleProductPhotoUpload(event, 'muscaria')" />
-                  </label>
                 </div>
               </div>
 
               <div class="flex items-center justify-between text-[11px] text-timber mt-1.5 px-0.5">
-                <div class="flex items-center gap-1.5">
-                  <span id="photo-status-muscaria">Фото реальной партии • сбор 2026</span>
-                  <button id="btn-reset-muscaria" type="button" onclick="resetProductPhoto('muscaria')" 
-                          class="hidden text-[10px] text-terracotta hover:underline ml-0.5 font-medium">
-                    (Сбросить)
-                  </button>
-                </div>
+                <span>Фото реальной партии • вакуумная упаковка 40г</span>
                 <span class="text-conifer font-medium">Сушка 40°C</span>
               </div>
             </div>
@@ -599,20 +583,19 @@
               </p>
             </div>
 
-            <!-- Dedicated Photo Showcase with Fullscreen Zoom & Custom Upload -->
+            <!-- Dedicated Photo Showcase with Fullscreen Zoom -->
             <div class="mb-6">
-              <div id="dropzone-pantherina" 
-                   class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-linenDark border border-borderStone group shadow-inner transition-all"
-                   ondragover="handlePhotoDragOver(event, 'pantherina')"
-                   ondragleave="handlePhotoDragLeave(event, 'pantherina')"
-                   ondrop="handlePhotoDrop(event, 'pantherina')">
+              <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-linenDark border border-borderStone group shadow-inner transition-all"
+                   ondragover="event.preventDefault(); this.classList.add('ring-2', 'ring-ochre');"
+                   ondragleave="this.classList.remove('ring-2', 'ring-ochre');"
+                   ondrop="handlePantherinaDrop(event)">
                 <img id="img-product-pantherina"
-                     src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80" 
+                     src="/photo_pantherina.jpg" 
                      alt="Пантерный мухомор (Amanita Pantherina) — сбор 2026, бассейн Амура"
                      referrerpolicy="no-referrer"
-                     class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 cursor-pointer"
+                     class="w-full h-full object-contain p-2 bg-stone-900 group-hover:scale-105 transition-transform duration-500 cursor-pointer"
                      onclick="openImageModal('pantherina')"
-                     onerror="this.src='https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&w=800&q=80'" />
+                     onerror="this.onerror=null; this.src='/806f94852d997c385ce5016e6e1575d8.jpg'" />
                 
                 <!-- Badges over photo -->
                 <div class="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5 pointer-events-none">
@@ -624,16 +607,17 @@
                   </span>
                 </div>
 
-                <!-- Drag & drop overlay indicator -->
-                <div id="drop-overlay-pantherina" class="absolute inset-0 bg-graphite/75 backdrop-blur-xs flex flex-col items-center justify-center text-white text-xs font-semibold pointer-events-none opacity-0 transition-opacity">
-                  <svg class="w-8 h-8 text-white mb-1.5 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-                  </svg>
-                  <span>Отпустите файл, чтобы установить фото</span>
-                </div>
-
                 <!-- Action buttons over photo -->
                 <div class="absolute bottom-2.5 right-2.5 flex items-center gap-1.5 opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                  <input type="file" id="pantherina-photo-input" accept="image/*" class="hidden" onchange="handlePantherinaPhotoUpload(this)" />
+                  <button type="button" onclick="document.getElementById('pantherina-photo-input').click()" 
+                          class="px-2.5 py-1.5 rounded-lg bg-white/95 hover:bg-white text-graphite text-[11px] font-semibold shadow-md flex items-center gap-1 border border-borderStone/40 transition-all"
+                          title="Загрузить или заменить фото реальной партии">
+                    <svg class="w-3.5 h-3.5 text-ochre" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                    </svg>
+                    <span>Загрузить фото</span>
+                  </button>
                   <button type="button" onclick="openImageModal('pantherina')" 
                           class="px-2.5 py-1.5 rounded-lg bg-white/95 hover:bg-white text-graphite text-[11px] font-semibold shadow-md flex items-center gap-1 border border-borderStone/40 transition-all"
                           title="Открыть в полном размере">
@@ -642,26 +626,11 @@
                     </svg>
                     <span>Увеличить</span>
                   </button>
-
-                  <label class="px-2.5 py-1.5 rounded-lg bg-ochre hover:bg-[#b07820] text-white text-[11px] font-semibold shadow-md flex items-center gap-1 transition-all cursor-pointer"
-                         title="Загрузить фото партии со своего устройства">
-                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    <span>Заменить фото</span>
-                    <input type="file" accept="image/*" class="hidden" onchange="handleProductPhotoUpload(event, 'pantherina')" />
-                  </label>
                 </div>
               </div>
 
               <div class="flex items-center justify-between text-[11px] text-timber mt-1.5 px-0.5">
-                <div class="flex items-center gap-1.5">
-                  <span id="photo-status-pantherina">Фото отборных шляпок • сбор 2026</span>
-                  <button id="btn-reset-pantherina" type="button" onclick="resetProductPhoto('pantherina')" 
-                          class="hidden text-[10px] text-ochre hover:underline ml-0.5 font-medium">
-                    (Сбросить)
-                  </button>
-                </div>
+                <span>Фото реальной партии • сбор 2026</span>
                 <span class="text-ochre font-medium">Сушка 40°C</span>
               </div>
             </div>
@@ -1264,8 +1233,8 @@
           </svg>
         </button>
 
-        <div class="relative w-full aspect-[16/10] bg-linenDark flex items-center justify-center overflow-hidden">
-          <img id="image-modal-img" src="" alt="Фотография продукта" class="w-full h-full object-cover object-center" />
+        <div class="relative w-full aspect-[4/3] max-h-[70vh] bg-stone-900 flex items-center justify-center overflow-hidden">
+          <img id="image-modal-img" src="" alt="Фотография продукта" class="w-full h-full object-contain p-2" />
           <div class="absolute top-4 left-4 flex flex-wrap gap-2">
             <span class="px-3 py-1 rounded-full bg-graphite/85 backdrop-blur-sm text-white text-xs font-semibold">
               Таёжный сбор 2026
@@ -1284,19 +1253,9 @@
               <span class="w-2 h-2 rounded-full bg-conifer"></span>
               100% натуральные сушёные шляпки • Сбор 2026
             </span>
-            <div class="flex items-center gap-2">
-              <label class="px-3.5 py-2 rounded-xl bg-terracotta hover:bg-[#962e1e] text-white font-semibold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
-                     title="Загрузить свою фотографию для этого товара">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
-                <span>Загрузить своё фото</span>
-                <input id="modal-file-input" type="file" accept="image/*" class="hidden" onchange="handleModalPhotoUpload(event)" />
-              </label>
-              <button type="button" onclick="closeImageModal()" class="px-4 py-2 rounded-xl bg-linen hover:bg-linenDark text-graphite font-semibold transition-all">
-                Закрыть
-              </button>
-            </div>
+            <button type="button" onclick="closeImageModal()" class="px-5 py-2.5 rounded-xl bg-linen hover:bg-linenDark text-graphite font-semibold transition-all">
+              Закрыть
+            </button>
           </div>
         </div>
       </div>
@@ -1800,158 +1759,6 @@
         if (modal) modal.classList.add('hidden');
       }
 
-      let currentModalKey = 'muscaria';
-
-      function handlePhotoDragOver(e, key) {
-        e.preventDefault();
-        e.stopPropagation();
-        const overlay = document.getElementById(`drop-overlay-${key}`);
-        if (overlay) overlay.classList.remove('opacity-0');
-      }
-
-      function handlePhotoDragLeave(e, key) {
-        e.preventDefault();
-        e.stopPropagation();
-        const overlay = document.getElementById(`drop-overlay-${key}`);
-        if (overlay) overlay.classList.add('opacity-0');
-      }
-
-      function handlePhotoDrop(e, key) {
-        e.preventDefault();
-        e.stopPropagation();
-        const overlay = document.getElementById(`drop-overlay-${key}`);
-        if (overlay) overlay.classList.add('opacity-0');
-        const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-        if (file) {
-          processAndSavePhoto(file, key);
-        }
-      }
-
-      function handleProductPhotoUpload(e, key) {
-        const file = e.target.files && e.target.files[0];
-        if (file) {
-          processAndSavePhoto(file, key);
-        }
-      }
-
-      function handleModalPhotoUpload(e) {
-        const file = e.target.files && e.target.files[0];
-        if (file) {
-          processAndSavePhoto(file, currentModalKey || 'muscaria');
-        }
-      }
-
-      function processAndSavePhoto(file, key) {
-        if (!file.type.startsWith('image/')) {
-          showToast('Пожалуйста, выберите файл изображения (JPG, PNG)');
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          const img = new Image();
-          img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const MAX_DIM = 1920;
-            let width = img.width;
-            let height = img.height;
-            if (width > MAX_DIM || height > MAX_DIM) {
-              if (width > height) {
-                height = Math.round((height * MAX_DIM) / width);
-                width = MAX_DIM;
-              } else {
-                width = Math.round((width * MAX_DIM) / height);
-                height = MAX_DIM;
-              }
-            }
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
-
-            // 1. Update product image
-            const imgEl = document.getElementById(`img-product-${key}`);
-            if (imgEl) imgEl.src = dataUrl;
-
-            // 2. Update modal image if open
-            const modalImg = document.getElementById('image-modal-img');
-            if (modalImg) modalImg.src = dataUrl;
-
-            // 3. Save to localStorage
-            try {
-              localStorage.setItem(`amanita_custom_photo_${key}`, dataUrl);
-            } catch (err) {
-              console.warn('LocalStorage limit:', err);
-            }
-
-            // 4. Update status & reset button
-            const statusEl = document.getElementById(`photo-status-${key}`);
-            const resetBtn = document.getElementById(`btn-reset-${key}`);
-            if (statusEl) statusEl.textContent = 'Ваше фото реальной партии';
-            if (resetBtn) resetBtn.classList.remove('hidden');
-
-            // 5. Send to server endpoint to save on disk
-            fetch('/api/upload-photo', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                imageBase64: dataUrl,
-                productKey: key,
-                filename: file.name || 'custom-batch.jpg'
-              })
-            }).catch(e => console.warn('Server upload notice:', e));
-
-            showToast('Фотография партии успешно обновлена!');
-          };
-          img.src = evt.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-
-      function resetProductPhoto(key) {
-        try {
-          localStorage.removeItem(`amanita_custom_photo_${key}`);
-        } catch (e) {}
-
-        const imgEl = document.getElementById(`img-product-${key}`);
-        if (imgEl) {
-          if (key === 'muscaria') {
-            imgEl.src = '/assets/hero/amanita-amur-package.jpg';
-          } else {
-            imgEl.src = 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80';
-          }
-        }
-
-        const modalImg = document.getElementById('image-modal-img');
-        if (modalImg && currentModalKey === key) {
-          modalImg.src = imgEl ? imgEl.src : '';
-        }
-
-        const statusEl = document.getElementById(`photo-status-${key}`);
-        const resetBtn = document.getElementById(`btn-reset-${key}`);
-        if (statusEl) statusEl.textContent = key === 'muscaria' ? 'Фото реальной партии • сбор 2026' : 'Фото отборных шляпок • сбор 2026';
-        if (resetBtn) resetBtn.classList.add('hidden');
-
-        showToast('Фотография сброшена к исходной');
-      }
-
-      function loadCustomPhotos() {
-        ['muscaria', 'pantherina'].forEach(key => {
-          try {
-            const saved = localStorage.getItem(`amanita_custom_photo_${key}`);
-            if (saved) {
-              const imgEl = document.getElementById(`img-product-${key}`);
-              if (imgEl) imgEl.src = saved;
-              const statusEl = document.getElementById(`photo-status-${key}`);
-              const resetBtn = document.getElementById(`btn-reset-${key}`);
-              if (statusEl) statusEl.textContent = 'Ваше фото реальной партии';
-              if (resetBtn) resetBtn.classList.remove('hidden');
-            }
-          } catch (e) {}
-        });
-      }
-
       /**
        * Image Modal (Fullscreen Zoom Preview)
        */
@@ -1962,18 +1769,17 @@
         const modalDesc = document.getElementById('image-modal-desc');
 
         if (!modal || !modalImg) return;
-        currentModalKey = keyOrSrc;
 
         if (keyOrSrc === 'muscaria') {
-          const imgEl = document.getElementById('img-product-muscaria');
-          modalImg.src = (imgEl && imgEl.src) ? imgEl.src : '/assets/hero/amanita-amur-package.jpg';
+          const currentMuscaria = document.getElementById('img-product-muscaria');
+          modalImg.src = currentMuscaria && currentMuscaria.src ? currentMuscaria.src : '/photo_2026-09-10_04-08-38.jpg';
           if (modalTitle) modalTitle.textContent = 'Красный мухомор (Amanita Muscaria) — сбор 2026';
-          if (modalDesc) modalDesc.textContent = 'Реальная партия таёжного сбора 2026 года. Отборные шляпки 1 сорта, бережная сушка при 40°C с сохранением максимальной активности.';
+          if (modalDesc) modalDesc.textContent = 'Реальная партия таёжного сбора 2026 года. Вакуумная упаковка 40г, отборные шляпки 1 сорта, сушка при 40°C с сохранением максимальной активности.';
         } else if (keyOrSrc === 'pantherina') {
-          const imgEl = document.getElementById('img-product-pantherina');
-          modalImg.src = (imgEl && imgEl.src) ? imgEl.src : 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80';
+          const currentPantherina = document.getElementById('img-product-pantherina');
+          modalImg.src = currentPantherina && currentPantherina.src ? currentPantherina.src : '/photo_pantherina.jpg';
           if (modalTitle) modalTitle.textContent = 'Пантерный мухомор (Amanita Pantherina) — сбор 2026';
-          if (modalDesc) modalDesc.textContent = 'Отборные цельные шляпки пантерного мухомора таёжного сбора 2026 года. Природный концентрат высокой чистоты.';
+          if (modalDesc) modalDesc.textContent = 'Реальная партия таёжного сбора 2026 года. Отборные шляпки пантерного мухомора 1 сорта, сушка при 40°C с сохранением максимальной концентрации.';
         } else {
           modalImg.src = keyOrSrc || '';
           if (modalTitle) modalTitle.textContent = customTitle || 'Фотография продукции';
@@ -2046,10 +1852,119 @@
         });
       }
 
+      /**
+       * Photo upload & sync logic
+       */
+      function handleMuscariaPhotoUpload(input) {
+        if (!input.files || !input.files[0]) return;
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const base64 = e.target.result;
+          const muscariaImg = document.getElementById('img-product-muscaria');
+          if (muscariaImg) muscariaImg.src = base64;
+          try {
+            localStorage.setItem('amanita_custom_photo_muscaria', base64);
+          } catch (err) {}
+          
+          fetch('/api/upload-photo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ imageBase64: base64, productKey: 'muscaria' })
+          }).then(res => res.json())
+            .then(() => {
+              showToast('Фотография партии сохранена и зафиксирована на сайте!');
+            })
+            .catch(() => {
+              showToast('Фото сохранено в браузере');
+            });
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function handleMuscariaDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('ring-2', 'ring-terracotta');
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+          const input = document.getElementById('muscaria-photo-input');
+          if (input) {
+            input.files = e.dataTransfer.files;
+            handleMuscariaPhotoUpload(input);
+          }
+        }
+      }
+
+      function handlePantherinaPhotoUpload(input) {
+        if (!input.files || !input.files[0]) return;
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const base64 = e.target.result;
+          const pantherinaImg = document.getElementById('img-product-pantherina');
+          if (pantherinaImg) pantherinaImg.src = base64;
+          try {
+            localStorage.setItem('amanita_custom_photo_pantherina', base64);
+          } catch (err) {}
+          
+          fetch('/api/upload-photo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ imageBase64: base64, productKey: 'pantherina' })
+          }).then(res => res.json())
+            .then(() => {
+              showToast('Фотография пантерного мухомора сохранена и зафиксирована!');
+            })
+            .catch(() => {
+              showToast('Фото сохранено в браузере');
+            });
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function handlePantherinaDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('ring-2', 'ring-ochre');
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+          const input = document.getElementById('pantherina-photo-input');
+          if (input) {
+            input.files = e.dataTransfer.files;
+            handlePantherinaPhotoUpload(input);
+          }
+        }
+      }
+
+      function syncAndLoadSavedPhoto() {
+        try {
+          const savedMuscaria = localStorage.getItem('amanita_custom_photo_muscaria');
+          if (savedMuscaria) {
+            const muscariaImg = document.getElementById('img-product-muscaria');
+            if (muscariaImg) muscariaImg.src = savedMuscaria;
+            // Sync with backend to ensure it's written to disk
+            fetch('/api/upload-photo', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ imageBase64: savedMuscaria, productKey: 'muscaria' })
+            }).catch(() => {});
+          }
+
+          const savedPantherina = localStorage.getItem('amanita_custom_photo_pantherina');
+          if (savedPantherina) {
+            const pantherinaImg = document.getElementById('img-product-pantherina');
+            if (pantherinaImg) pantherinaImg.src = savedPantherina;
+            // Sync with backend to ensure it's written to disk
+            fetch('/api/upload-photo', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ imageBase64: savedPantherina, productKey: 'pantherina' })
+            }).catch(() => {});
+          }
+        } catch (e) {}
+      }
+
       // Initialize on DOM load
       document.addEventListener('DOMContentLoaded', () => {
+        syncAndLoadSavedPhoto();
         initMessengerLinks();
-        loadCustomPhotos();
         setProductWeight('muscaria', 50);
         setProductWeight('pantherina', 50);
         renderCart();
