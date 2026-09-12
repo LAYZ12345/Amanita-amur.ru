@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amanita-amur.online/sitemap.xml
+Host: https://amanita-amur.online
